@@ -91,20 +91,6 @@ const userRepoQuery = (id: string) => {
   });
 };
 
-const trendingReposQuery = () => {
-  return useQuery({
-    queryKey: ["trendingRepos"],
-    queryFn: async () => {
-      const response = await fetch(
-        "https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc&per_page=5"
-      );
-      return response.json();
-    },
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60,
-  });
-};
-
 function formatJoinDate(dateString: string): string {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
@@ -125,7 +111,6 @@ export default function ProfilePage() {
   const { data: userData, isLoading: isLoadingUser } = userDataQuery(id!);
   const { data: userOrgs, isLoading: isLoadingOrgs } = userOrgsQuery(id!);
   const { data: userRepos, isLoading: isLoadingRepos } = userRepoQuery(id!);
-  const { data: trendingRepos } = trendingReposQuery();
 
   const isLoading = isLoadingUser || isLoadingOrgs || isLoadingRepos;
 
