@@ -136,18 +136,19 @@ export default function ProfilePage() {
 
   const isLoading = isLoadingUser || isLoadingOrgs || isLoadingRepos;
 
-  const sortedRepos = userRepos
-    ? [...userRepos].sort((a: any, b: any) => {
-        if (sortCriteria === "stars") {
-          return b.stargazers_count - a.stargazers_count;
-        } else if (sortCriteria === "forks") {
-          return b.forks_count - a.forks_count;
-        } else if (sortCriteria === "size") {
-          return b.size - a.size;
-        }
-        return 0;
-      })
-    : [];
+  const sortedRepos =
+    userRepos && userRepos.length > 0
+      ? [...userRepos].sort((a: any, b: any) => {
+          if (sortCriteria === "stars") {
+            return b.stargazers_count - a.stargazers_count;
+          } else if (sortCriteria === "forks") {
+            return b.forks_count - a.forks_count;
+          } else if (sortCriteria === "size") {
+            return b.size - a.size;
+          }
+          return 0;
+        })
+      : [];
 
   const handleSortChange = (event: any) => {
     setSortCriteria(event.target.value);
@@ -420,6 +421,7 @@ export default function ProfilePage() {
       </Box>
       <Divider sx={{ marginBottom: 4 }} />
 
+<<<<<<< HEAD
       <Tabs
         value={currentTab}
         onChange={(_, newValue) => setCurrentTab(newValue)}
@@ -558,11 +560,60 @@ export default function ProfilePage() {
             />
             <FormControl sx={{ minWidth: 120 }}>
               <InputLabel id="sort-by-label">Sort by</InputLabel>
+=======
+      {userRepos && userRepos.length > 0 && (
+        <>
+          <Grid container spacing={4} sx={{ marginBottom: 4 }}>
+            {[
+              { title: "User Activity" },
+              { title: "Stars per Repository" },
+              { title: "Language Usage" },
+            ].map((chart, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Card sx={{ boxShadow: 4 }}>
+                  <CardContent>
+                    <Typography variant="h5" sx={{ mb: 2 }}>
+                      {chart.title}
+                    </Typography>
+                    <Box sx={{ p: 2 }}>{/* <chart.ChartComponent /> */}</Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Divider sx={{ marginBottom: 4 }} />{" "}
+        </>
+      )}
+
+      {userRepos && userRepos.length > 0 && (
+        <Box sx={{ mb: 4 }}>
+          {/* Top Section Header */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 3,
+            }}
+          >
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              Top Repos
+            </Typography>
+
+            {/* Sort Dropdown */}
+            <FormControl sx={{ minWidth: 120 }}>
+              <InputLabel id="sort-by-label">by</InputLabel>
+>>>>>>> 3cf033b94226572a9e5866c5c3391c93656565fa
               <Select
                 labelId="sort-by-label"
                 value={sortCriteria}
                 onChange={handleSortChange}
+<<<<<<< HEAD
                 label="Sort by"
+=======
+                label="by"
+                sx={{ boxShadow: 1, borderRadius: 2 }}
+>>>>>>> 3cf033b94226572a9e5866c5c3391c93656565fa
               >
                 <MenuItem value="stars">Stars</MenuItem>
                 <MenuItem value="forks">Forks</MenuItem>
@@ -571,6 +622,7 @@ export default function ProfilePage() {
             </FormControl>
           </Box>
 
+<<<<<<< HEAD
           {/* Repository Grid */}
           <Grid container spacing={3}>
             {filteredAndSortedRepos?.map((repo: any, index: number) => (
@@ -602,24 +654,49 @@ export default function ProfilePage() {
                           mb: 2,
                         }}
                       >
+=======
+          {/* Repositories Grid */}
+          <Grid container spacing={3}>
+            {sortedRepos.length > 0 &&
+              sortedRepos?.map((repo: any, index: number) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <Card elevation={3} sx={{ borderRadius: 2 }}>
+                      <CardContent>
+>>>>>>> 3cf033b94226572a9e5866c5c3391c93656565fa
                         <Typography
                           variant="h6"
                           component="div"
                           sx={{
+<<<<<<< HEAD
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
+=======
+                            ml: 0.5,
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+>>>>>>> 3cf033b94226572a9e5866c5c3391c93656565fa
                           }}
                         >
                           <Link
                             href={repo.html_url}
                             target="_blank"
                             rel="noopener"
+<<<<<<< HEAD
                             sx={{ textDecoration: "none" }}
+=======
+>>>>>>> 3cf033b94226572a9e5866c5c3391c93656565fa
                           >
                             {repo.name}
                           </Link>
                         </Typography>
+<<<<<<< HEAD
                         {repo.private && (
                           <Box
                             sx={{
@@ -917,6 +994,62 @@ export default function ProfilePage() {
           </Grid>
         </Grid>
       )}
+=======
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            mt: 2,
+                          }}
+                        >
+                          {/* Left Side Stats */}
+                          <Box sx={{ display: "flex", gap: 1 }}>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                              <CircleRounded
+                                fontSize="small"
+                                sx={{
+                                  color:
+                                    langColors.get(repo?.language) || "gray",
+                                }}
+                              />
+                              <Typography variant="body2" sx={{ ml: 0.5 }}>
+                                {repo?.language}
+                              </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                              <StarIcon
+                                fontSize="small"
+                                sx={{ color: "#ffcc00" }}
+                              />
+                              <Typography variant="body2" sx={{ ml: 0.5 }}>
+                                {repo.stargazers_count}
+                              </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                              <ForkRightIcon fontSize="small" />
+                              <Typography variant="body2" sx={{ ml: 0.5 }}>
+                                {repo.forks_count}
+                              </Typography>
+                            </Box>
+                          </Box>
+
+                          {/* Right Side Size */}
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <Typography variant="body2" sx={{ ml: 0.5 }}>
+                              {repo.size} KB
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </Grid>
+              ))}
+          </Grid>
+        </Box>
+      )}
+>>>>>>> 3cf033b94226572a9e5866c5c3391c93656565fa
     </Paper>
   );
 }
