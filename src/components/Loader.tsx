@@ -1,6 +1,17 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import { FC } from "react";
 
-export const Loader = () => {
+interface LoaderProps {
+  size?: number;
+  color?: "inherit" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
+  text?: string;
+}
+
+export const Loader: FC<LoaderProps> = ({
+  size = 40,
+  color = "primary",
+  text = "Loading...",
+}) => {
   return (
     <Box
       sx={{
@@ -10,13 +21,11 @@ export const Loader = () => {
         height: "100vh",
         width: "100vw",
         flexDirection: "column",
+        gap: 2,
       }}
     >
-      <Typography variant="h5">
-        <svg className="loader" viewBox="25 25 50 50">
-          <circle r="20" cy="50" cx="50"></circle>
-        </svg>
-      </Typography>
+      <CircularProgress size={size} color={color} />
+      {text && <Typography variant="h6">{text}</Typography>}
     </Box>
   );
 };
